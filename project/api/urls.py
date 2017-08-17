@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from api.api import StatusView
+from .api import StatusView
 
 urlpatterns = [
     url('^status/$', StatusView.as_view(), name='status'),

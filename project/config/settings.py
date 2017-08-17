@@ -1,26 +1,17 @@
-"""
-Django settings for seymour project.
-
-For more information on this file, see
-https://docs.djangoproject.com/en/1.11/topics/settings/
-
-For the full list of settings and their values, see
-https://docs.djangoproject.com/en/1.11/ref/settings/
-"""
-
 import os
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-CONFIG_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BASE_DIR = os.path.join(CONFIG_DIR, '..')
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('PROJECT_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = bool(os.environ.get('PROJECT_DEBUG', False))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get('PROJECT_ALLOWED_HOSTS', '127.0.0.1').split(',')
 
 # Application definition
 
@@ -33,8 +24,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # 3rd party apps
     'rest_framework',
-    # Our apps
-    'api.apps.ApiConfig',
+    # Our app
+    'api',
 ]
 
 MIDDLEWARE = [
@@ -67,6 +58,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
+# Database
+# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
+
+DATABASES = {
+    'default': {
+        'ENGINE': os.environ.get('PROJECT_DB_ENGINE', None),
+        'NAME': os.environ.get('PROJECT_DB_NAME', None),
+        'USER': os.environ.get('PROJECT_DB_USER', ''),
+        'PASSWORD': os.environ.get('PROJECT_DB_PASSWORD', ''),
+    }
+}
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
@@ -84,3 +87,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Django REST framework
+
+# The default renderer is set as JSON. No browsable API in production.
+# See http://www.django-rest-framework.org/api-guide/renderers/ for more info.
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    )
+}
