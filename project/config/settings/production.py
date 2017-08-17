@@ -21,3 +21,13 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+# Django REST framework
+
+# The default renderer is set as JSON. No browsable API in production.
+# See http://www.django-rest-framework.org/api-guide/renderers/ for more info.
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    )
+}
