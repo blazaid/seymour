@@ -40,9 +40,10 @@ command the project structure ends as follows:
 
 ```
 my_service
+│   .gitignore
 │   LICENSE.txt
 │   README.md
-│   requirements.txt    
+│   requirements.txt
 │
 └───project
     │   manage.py
@@ -69,6 +70,7 @@ The rest of the section explains this structure contents.
 
 | File / directory | Explanation |
 |------------------|-------------|
+| `.gitignore` | The default .gitignore for python projects from github). |
 | `./LICENSE.txt` | The description of the license. |
 | `./README.md` | This file. |
 | `./requirements.txt` | The main requirements (to install via pip). |
