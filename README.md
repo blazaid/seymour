@@ -60,11 +60,7 @@ my_service
     └───config
         │   urls.py
         │   wsgi.py
-        │
-        └───settings
-            │   base.py
-            │   devel.py
-            │   production.py
+        │   settings.py
 ```
 
 The rest of the section explains this structure contents.
@@ -102,15 +98,37 @@ application is enough in the vast majority of the cases.
 ##### Django application layout (`api` directory)
 
 The `api` directory holds all the logic of the service. It's a normal django
-application with three more files:
+application (so there is no need to explain the usual files) with three more 
+files.
 
-- `api.py`. Created to contain all the endpoints sources of the application 
-(the web services).
-- `serializers.py`. Created to contain the Django REST framework serializers.
-- `urls.py`. Created to specify the urls inside the context of the API.
+| File / directory | Explanation |
+|------------------|-------------|
+| `./api.py` | Contain all the sources for the endpoints of the service. |
+| `./serializers.py` | Contains all the serializers of Django Rest Framework. |
+| `./urls.py` | Specifies the urls inside the context of the API. |
 
 All the endpoints URL's will be deployed under the /api/ context 
 (we'll see it later in `config/urls.py`) 
+
+##### Django configuration layout (`config` directory)
+
+It holds the configuration of the django project. The main differences with 
+a normal django project are the name (is named config instead) and that the 
+key variables to configure are specified as environment variables.
+
+The user can replace the calls to `os.environ` by the variables to configure or
+create the variables in the environment. The configurable variables shown in
+ the next table.
+
+| Variable | Description | Mandatory | Defaults |
+|----------|-------------| --------- | -------- |
+| PROJECT_SECRET_KEY | The secret key of the project | Yes | None |
+| PROJECT_DEBUG | If the debug mode is enabled (True/False) | No | False |
+| PROJECT_ALLOWED_HOSTS | A list of allowed hosts (',' sep.) | No | 127.0.0.1 |
+| PROJECT_DB_ENGINE | The engine string of the database driver | Yes | None |
+| PROJECT_DB_NAME | The database name | Yes | None |
+| PROJECT_DB_USER | The user allowed to access to the database | No | '' |
+| PROJECT_DB_PASSWORD | The users password | No | '' |
 
 ## Python versions
 
@@ -124,11 +142,10 @@ This project is licensed under the terms of the MIT license. More information
 is available in [license file](LICENSE.txt) and in
 https://tldrlegal.com/license/mit-license.
 
-
 ## About the name
 
-Seymour Asses is the Philip J. Fry dog who was waiting for it's owner since he
-got frozen. However, in a latter chapter, a Fry's clone travels to the past and
+Seymour Asses is the Philip J. Fry dog who was waiting for its owner since he
+got frozen. However, in a latter chapter, a Fry's clone travels in time and
 supersedes Fry in the past so we hope Seymour had a happy life.
 
 The reason to choose this name is because I like that dog. That's all :D.
